@@ -1,0 +1,51 @@
+#Azure Environment
+resource_group = "icp_rg"                           #Azure Resource Group
+location = "southeastasia"                          #Azure Location Code
+virtual_network_name = "vnet"                       #Azure Virtual Network Name
+address_spaces = ["10.1.0.0/16","172.16.0.0/16"]    #Azure Address Space
+route_table_name = "icp_route"                      #Azure Routing Table Name
+subnet_name = "icp_subnet"                          #Azure Subnet Name
+subnet_prefix = "10.1.0.0/24"                       #Azure Subnet Prefix
+storage_account_tier = "Standard"                   #Azure Storage Tier
+storage_replication_type = "LRS"                    #Azure Storage Replication Type
+#VM Image
+os_image = "ubuntu"                                 #Azure OS Image: "ubuntu" or "redhat". The value is mapped to os_image_map variable in variable.tf
+admin_username = "vmadmin"                          #Image Admin User
+#ICP Details
+ssh_key_name = "az-icp"                             #SSH Key Name
+cluster_name = "myicp"                              #ICP Cluster Name
+icpadmin_password = "admin"                         #ICP Admin Password
+icp_version = "2.1.0.1"                             #ICP Version #Community: 2.1.0.1 #Enterprise: 2.1.0.1-ee
+network_cidr = "172.16.0.0/16"                      #ICP Network CIDR
+cluster_ip_range = "10.1.1.1/24"                    #ICP Cluster IP Range
+master = {                                          #VM Specification for ICP Master node
+    nodes       = "1"
+    name        = "master"
+    vm_size     = "Standard_A4_v2"
+    kubelet_lv  = "10"                              #Kubelet Volume size
+    docker_lv   = "70"                              #Docker Volume size
+    registry_lv = "15"                              #Registry Volume size
+    etcd_lv     = "4"                               #etcd volume size
+}
+proxy = {                                           #VM Specification for ICP Proxy node
+    nodes       = "0"
+    name        = "proxy"
+    vm_size     = "Standard_A2_v2"
+    kubelet_lv  = "10"
+    docker_lv   = "39"
+}
+management = {                                      #VM Specification for ICP Management node
+    nodes       = "1"
+    name        = "mgmt"
+    vm_size     = "Standard_A4_v2"
+    kubelet_lv  = "10"
+    docker_lv   = "40"
+    management_lv = "49"                            #Management Volume size
+}
+worker = {                                          #VM Specification for ICP Worker node
+    nodes       = "1"
+    name        = "worker"
+    vm_size     = "Standard_A2_v2"
+    kubelet_lv  = "10"
+    docker_lv   = "89"
+}
