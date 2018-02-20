@@ -129,9 +129,10 @@ variable "master" {
     name        = "master"
     vm_size     = "Standard_A4_v2"
     kubelet_lv  = "10"
-    docker_lv   = "70"
+    docker_lv   = "50"
     registry_lv = "15"
-    etcd_lv     = "4"    
+    etcd_lv     = "4"
+    management_lv = "20"
   }
 }
 variable "proxy" {

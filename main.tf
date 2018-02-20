@@ -251,7 +251,7 @@ resource "azurerm_managed_disk" "master_datadisk" {
   resource_group_name  = "${azurerm_resource_group.rg.name}"
   storage_account_type = "${var.storage_account_tier}_${var.storage_replication_type}"
   create_option        = "Empty"
-  disk_size_gb         = "${var.master["kubelet_lv"] + var.master["docker_lv"] + var.master["registry_lv"] + var.master["etcd_lv"] + 1}"
+  disk_size_gb         = "${var.master["kubelet_lv"] + var.master["docker_lv"] + var.master["registry_lv"] + var.master["etcd_lv"] + var.master["management_lv"] + 1}"
 }
 resource "azurerm_managed_disk" "proxy_datadisk" {
   count                = "${var.proxy["nodes"]}"
@@ -298,6 +298,7 @@ data "template_file" "createfs_master" {
     docker_lv = "${var.master["docker_lv"]}"
     etcd_lv = "${var.master["etcd_lv"]}"
     registry_lv = "${var.master["registry_lv"]}"
+    management_lv = "${var.master["management_lv"]}"
   }
 }
 data "template_file" "createfs_proxy" {
