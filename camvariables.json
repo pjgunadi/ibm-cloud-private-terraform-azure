@@ -142,7 +142,7 @@
     "name": "ssh_key_name",
     "label": "SSH Key Pair Name",
     "description": "Select SSH Key Name that has been registered in Azure",
-    "default": "aws-key",
+    "default": "az-icp",
     "hidden": false,
     "immutable": false,
     "required": true,
