@@ -176,6 +176,7 @@
     "name": "admin_username",
     "label": "Admin Login Username",
     "description": "Administrator Login User",
+    "default": "vmadmin",
     "hidden": false,
     "immutable": false,
     "required": true,
