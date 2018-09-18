@@ -114,9 +114,24 @@ variable "icpadmin_password" {
 variable install_gluster {
     default = false
 }
+variable "gluster_volume_type" {
+  default = "none"
+}
+variable "heketi_admin_pwd" {
+  default = "none"
+}
 variable "icp_version" {
     description = "ICP Version"
-    default = "2.1.0.1"
+    default = "2.1.0.3"
+}
+variable "management_services" {
+  type = "map"
+  default = {
+    istio = "disabled"
+    vulnerability-advisor = "disabled"
+    storage-glusterfs = "disabled"
+    storage-minio = "disabled"
+  }
 }
 variable "cluster_name" {
   description = "Deployment name for resources prefix"
@@ -127,12 +142,12 @@ variable "master" {
   default = {
     nodes       = "1"
     name        = "master"
-    vm_size     = "Standard_A4_v2"
+    vm_size     = "Standard_A8_v2"
     kubelet_lv  = "10"
     docker_lv   = "50"
-    registry_lv = "15"
+    registry_lv = "35"
     etcd_lv     = "4"
-    management_lv = "20"
+    management_lv = "100"
   }
 }
 variable "proxy" {
@@ -140,9 +155,9 @@ variable "proxy" {
   default = {
     nodes       = "1"
     name        = "proxy"
-    vm_size     = "Standard_A2_v2"
+    vm_size     = "Standard_A4_v2"
     kubelet_lv  = "10"
-    docker_lv   = "39"
+    docker_lv   = "64"
   }
 }
 variable "management" {
@@ -150,20 +165,39 @@ variable "management" {
   default = {
     nodes       = "1"
     name        = "mgmt"
-    vm_size     = "Standard_A4_v2"
+    vm_size     = "Standard_A8_v2"
     kubelet_lv  = "10"
-    docker_lv   = "40"
-    management_lv = "49"
+    docker_lv   = "50"
+    management_lv = "139"
+  }
+}
+variable "va" {
+  type = "map"
+  default = {
+    nodes       = "1"
+    name        = "va"
+    vm_size     = "Standard_A8_v2"
+    kubelet_lv  = "10"
+    docker_lv   = "50"
+    va_lv       = "139"
   }
 }
 variable "worker" {
   type = "map"
   default = {
-    nodes       = "3"
+    nodes       = "1"
     name        = "worker"
-    datadisk    = "70"
-    vm_size     = "Standard_A4_v2"
+    vm_size     = "Standard_A8_v2"
     kubelet_lv  = "10"
     docker_lv   = "89"
+  }
+}
+variable "gluster" {
+  type = "map"
+  default = {
+    nodes       = "0"
+    name        = "gluster"
+    vm_size     = "Standard_A2_v2"
+    glusterfs     = "100"
   }
 }

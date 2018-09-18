@@ -7,9 +7,9 @@ vgcreate icp-vg /dev/sdc
 
 #Create Logical Volumes
 lvcreate -L ${kubelet_lv}G -n kubelet-lv icp-vg
-lvcreate -L ${docker_lv}G -n docker-lv icp-vg
 lvcreate -L ${etcd_lv}G -n etcd-lv icp-vg
 lvcreate -L ${registry_lv}G -n registry-lv icp-vg
+lvcreate -L ${docker_lv}G -n docker-lv icp-vg
 lvcreate -L ${management_lv}G -n management-lv icp-vg
 
 #Create Filesystems
@@ -24,7 +24,7 @@ mkdir -p /var/lib/docker
 mkdir -p /var/lib/kubelet
 mkdir -p /var/lib/etcd
 mkdir -p /var/lib/registry
-mkdir -p /opt/ibm/cfc
+mkdir -p /var/lib/icp
 
 #Add mount in /etc/fstab
 cat <<EOL | tee -a /etc/fstab
@@ -32,7 +32,7 @@ cat <<EOL | tee -a /etc/fstab
 /dev/mapper/icp--vg-docker--lv /var/lib/docker ext4 defaults 0 0
 /dev/mapper/icp--vg-etcd--lv /var/lib/etcd ext4 defaults 0 0
 /dev/mapper/icp--vg-registry--lv /var/lib/registry ext4 defaults 0 0
-/dev/mapper/icp--vg-management--lv /opt/ibm/cfc ext4 defaults 0 0
+/dev/mapper/icp--vg-management--lv /var/lib/icp ext4 defaults 0 0
 EOL
 
 #Mount Filesystems

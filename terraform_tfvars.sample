@@ -15,38 +15,67 @@ admin_username = "vmadmin"                          #Image Admin User
 ssh_key_name = "az-icp"                             #SSH Key Name
 cluster_name = "myicp"                              #ICP Cluster Name
 icpadmin_password = "admin"                         #ICP Admin Password
-icp_version = "2.1.0.1"                             #ICP Version #Community: 2.1.0.1 #Enterprise: 2.1.0.1-ee
+icp_version = "2.1.0.3"                             #ICP Version. e.g. 2.1.0.3 , 2.1.0.3-ee, ibmcom/icp-inception-amd64:3.1.0-ee
 network_cidr = "172.16.0.0/16"                      #ICP Network CIDR
 cluster_ip_range = "10.1.1.1/24"                    #ICP Cluster IP Range
+install_gluster = true                              #Flag to install gluster
+gluster_volume_type = "none"                        #Gluster Volume Type. Sample: none, replicate:3, disperse:4:2
+heketi_admin_pwd = "your-password"                  #Heketi API admin password
+management_services = {                             #Default Disabled management component v3.1.0
+  istio = "disabled"
+  vulnerability-advisor = "disabled"
+  storage-glusterfs = "disabled"
+  storage-minio = "disabled"
+}
+
 master = {                                          #VM Specification for ICP Master node
     nodes       = "1"
     name        = "master"
-    vm_size     = "Standard_A4_v2"
+    vm_size     = "Standard_F8s_v2"
     kubelet_lv  = "10"                              #Kubelet Volume size
     docker_lv   = "50"                              #Docker Volume size
-    registry_lv = "15"                              #Registry Volume size
     etcd_lv     = "4"                               #etcd volume size
-    management_lv = "20"                            #Management Volume size
+    registry_lv = "35"                              #Registry Volume size
+    management_lv = "100"                           #Management Volume size
 }
 proxy = {                                           #VM Specification for ICP Proxy node
     nodes       = "0"
     name        = "proxy"
-    vm_size     = "Standard_A2_v2"
+    vm_size     = "Standard_F4s_v2"
     kubelet_lv  = "10"
-    docker_lv   = "39"
+    docker_lv   = "64"
 }
 management = {                                      #VM Specification for ICP Management node
     nodes       = "1"
     name        = "mgmt"
-    vm_size     = "Standard_A4_v2"
+    vm_size     = "Standard_F8s_v2"
     kubelet_lv  = "10"
-    docker_lv   = "40"
-    management_lv = "49"                            #Management Volume size
+    docker_lv   = "50"
+    management_lv = "139"                            #Management Volume size
+}
+va = {                                              #VM Specification for ICP VA node
+    nodes       = "1"
+    name        = "va"
+    vm_size     = "Standard_F8s_v2"
+    kubelet_lv  = "10"
+    docker_lv   = "50"
+    va_lv       = "139"
 }
 worker = {                                          #VM Specification for ICP Worker node
     nodes       = "1"
     name        = "worker"
-    vm_size     = "Standard_A2_v2"
+    vm_size     = "Standard_F8s_v2"
     kubelet_lv  = "10"
     docker_lv   = "89"
 }
+gluster = {                                         #VM Specification for Gluster node
+    nodes       = "0"
+    name        = "gluster"
+    vm_size     = "Standard_F2s_v2"
+    glusterfs   = "100"
+}
+#icp_source_server="x.x.x.x"                    #SFTP Server for Enterprise Edition or AWS S3 Region e.g ap-southeast-1
+#icp_source_user="ftp-user"                     #SFTP Login user or AWS S3 Access Key
+#icp_source_password="ftp-password"             #SFTP Login password or AWS S3 Secret Key
+#icp_source_path="path-to-icp-enterprise-file"  #Download file location in SFTP server or s3://<bucket>/<path>
+
